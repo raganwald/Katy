@@ -1,0 +1,21 @@
+{
+  "author": "Reg Braithwaite <raganwald@gmail.com> (http://reginald.braythwayt.com)",
+  "name": "Katy",
+  "description": "Fluent Coffeescript",
+  "version": "0.0.1",
+  "homepage": "https://github.com/raganwald/Katy",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/raganwald/Katy.git"
+  },
+  "main": "lib/katy.js",
+  "scripts": {
+    "test": "jasmine-node --coffee --verbose spec"
+  },
+  "engines": {
+    "node": ""
+  },
+  "dependencies": {
+  },
+  "devDependencies": {}
+}
