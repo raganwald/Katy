@@ -41,22 +41,6 @@ describe "Wrapping Katy", ->
 
       expect( khw.T( (x) -> 'XXX' + x + 'XXX') ).toEqual("XXXHello WorldXXX")
 
-  describe "Functionalizing", ->
-
-    describe "strings", ->
-
-      KT.installStringLambdas()
-
-      k123 = KT([1..3])
-
-      it 'should accept a string for K', ->
-
-        expect( k123.K('.concat([4, 5, 6])') ).toEqual([1..3])
-
-      it 'should accept a string for T', ->
-
-        expect( k123.T('.concat([4, 5, 6])') ).toEqual([1..6])
-
 describe 'Installing Katy', ->
 
   KT.mixInto(Object)
@@ -98,4 +82,33 @@ describe 'Installing Katy', ->
     it 'should return the result', ->
 
       expect( hw.T( (x) -> 'XXX' + x + 'XXX') ).toEqual("XXXHello WorldXXX")
+
+describe "Functionalizing Strings", ->
+
+  describe "lambdas", ->
+
+    KT.installStringLambdas()
+
+    k123 = KT([1..3])
+
+    it 'should accept a string lambda for K', ->
+
+      expect( k123.K('.concat([4, 5, 6])') ).toEqual([1..3])
+
+    it 'should accept a string lambda for T', ->
+
+      expect( k123.T('.concat([4, 5, 6])') ).toEqual([1..6])
+
+  describe 'messages', ->
+
+    k123 = KT([1..3])
+
+    it 'should accept a message and argument(s) for K', ->
+
+      expect( k123.K('concat',[4, 5, 6]) ).toEqual([1..3])
+
+    it 'should accept a message and argument(s) for T', ->
+
+      expect( k123.T('concat',[4, 5, 6]) ).toEqual([1..6])
+
 

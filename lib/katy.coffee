@@ -1,8 +1,11 @@
 root = this
 
-functionalize = (fn, args...) ->
+functionalize = (fn) ->
   if typeof(fn) is 'function'
     fn
+  else if typeof(fn) is 'string' and /^[_a-zA-Z]\w*$/.test(fn)
+    (receiver, args...) ->
+      receiver[fn].call(receiver, args...)
   else if typeof(fn.lambda) is 'function'
     fn.lambda()
   else if typeof(fn.toFunction) is 'function'
