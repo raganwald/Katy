@@ -18,6 +18,18 @@ class OneTimeWrapper
     @what
   T: (fn, args...) ->
     functionalize(fn)(@what, args...)
+  chain: -> new MonadicWrapper(@what)
+  value: -> @what
+
+class MonadicWrapper
+  constructor: (@what) ->
+  K: (fn, args...) ->
+    functionalize(fn)(@what, args...)
+    this
+  T: (fn, args...) ->
+    new MonadicWrapper(functionalize(fn)(@what, args...))
+  chain: -> this
+  value: -> @what
 
 root.KT = (what) -> new OneTimeWrapper(what)
 

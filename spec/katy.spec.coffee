@@ -43,7 +43,7 @@ describe "Wrapping Katy", ->
 
 describe 'Installing Katy', ->
 
-  KT.mixInto(Object)
+  KT.mixInto(String)
 
   hw = "Hello World"
 
@@ -111,12 +111,20 @@ describe "Functionalizing Strings", ->
 
       expect( k123.T('concat',[4, 5, 6]) ).toEqual([1..6])
 
-describe 'code examples', ->
+describe 'chaining', ->
 
-  it 'should reproduce example 1', ->
+  it 'should not be mixed into array', ->
 
-    expect([1..10]
-      .K('pop')
-      .K('pop')
-      .K('pop')
-      .T('pop')).toEqual(7)
+    expect([1..10]).not.toRespondToAny('K', 'T')
+
+  it 'should chain', ->
+
+    expect(
+      KT([1..10]).chain()
+        .K('pop')
+        .K('pop')
+        .K('pop')
+        .T('pop')
+        .value()
+    ).toEqual(7)
+
