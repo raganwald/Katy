@@ -1,10 +1,6 @@
 KT = require('../lib/katy.coffee').KT
 require 'UnderscoreMatchersForJasmine'
 
-###########
-# K and T #
-###########
-
 describe "Wrapping Katy", ->
 
   khw = KT("Hello World")
@@ -44,3 +40,22 @@ describe "Wrapping Katy", ->
     it 'should return the result', ->
 
       expect( khw.T( (x) -> 'XXX' + x + 'XXX') ).toEqual("XXXHello WorldXXX")
+
+  describe "Functionalizing", ->
+
+    describe "strings", ->
+
+      KT.installStringLambdas()
+
+      k123 = KT([1..3])
+
+      it 'should accept a string for K', ->
+
+        expect( k123.K('.concat([4, 5, 6])') ).toEqual([1..3])
+
+      it 'should accept a string for T', ->
+
+        expect( k123.T('.concat([4, 5, 6])') ).toEqual([1..6])
+
+
+
