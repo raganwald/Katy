@@ -34,6 +34,8 @@ KT.mixInto(Array)
   # => returns 7
 ```
 
+Snarf the source here, or install it with `npm install Katy`.
+
 ## How does that make my code more fluent?
 
 You're familiar with [fluent interfaces][fluent]. They're great, but they rely on the author of the API making sure that each function returns its receiver. The `.K` method allows you to make any function or method "fluent" even if the original author has other ideas. The `.K` and `.T` methods also allow you to write your own methods and 'call' them just as if they were baked into the original object. For example, you can fake an `identifiers` filter for arrays of strings:
