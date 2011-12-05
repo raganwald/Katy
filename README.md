@@ -38,7 +38,9 @@ KT.mixInto(Array)
 
 ## How does that make my code more fluent?
 
-You're familiar with [fluent interfaces][fluent]. They're great, but they rely on the author of the API making sure that each function returns its receiver. The `.K` method allows you to make any function or method "fluent" even if the original author has other ideas. The `K` and `T` methods also allow you to write your own methods and 'call' them just as if they were baked into the original object. For example, you can fake an `isAnIdentifier` method for strings:
+You're familiar with [fluent interfaces][fluent]. They're great, but they rely on the author of the API making sure that each function returns its receiver. The `.K` method allows you to make any function or method "fluent" even if the original author has other ideas. The `K` and `T` methods also allow you to write your own methods and 'call' them just as if they were baked into the original object. For example, you can fake an `identifiers` filter for arrays of strings:
+
+[fluent]: http://en.wikipedia.org/wiki/Fluent_interface
 
 ```coffeescript
 require 'underscore'
@@ -51,9 +53,9 @@ someArray
   .T(identifiers)
   .K(someFunctionOnThem)
   .T(someOtherFilter)
-````
+```
 
-[fluent]: http://en.wikipedia.org/wiki/Fluent_interface
+The win is that having extended `Array.prototype` with `.K` and `.T` once, you need not extend it any more to add your own custom methods. Furthermore, you can use fluent or pipelining behaviour with your own or any built-in method as you please.
   
 ## Is Katy be any good?
 
@@ -78,3 +80,7 @@ jasmine-node --coffee spec
 Probably, but if you like jQuery and like Katy, you'll really like [jQuery Combinators][jc].
 
 [jc]: https://github.com/raganwald/JQuery-Combinators
+
+## Calling a method by name is cool, but can you do more with Strings?
+
+Try `KT.installStringLambdas()`. The result is not to everybody's taste, but those who like it, like it a lot.
