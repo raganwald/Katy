@@ -76,7 +76,7 @@ KT([1..10])
   # => returns 7
 ```
 
-## Stuff an nonsense, this is a syntax issue, not a functional issue
+## Stuff and nonsense, this is a syntax issue, not a functional issue
 
 [I agree][sans-titre], but that being said:
 
