@@ -111,4 +111,12 @@ describe "Functionalizing Strings", ->
 
       expect( k123.T('concat',[4, 5, 6]) ).toEqual([1..6])
 
+describe 'code examples', ->
 
+  it 'should reproduce example 1', ->
+
+    expect([1..10]
+      .K('pop')
+      .K('pop')
+      .K('pop')
+      .T('pop')).toEqual(7)
