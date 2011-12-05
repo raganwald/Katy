@@ -9,3 +9,12 @@ Katy
 
 [y]: http://news.ycombinator.com/item?id=3067434
 
+## How do I run tests?
+
+You'll need `node.js` for starters. Then:
+
+```bash
+npm install jasmine-node
+npm install UnderscoreMatchersForJasmine 
+jasmine-node --coffee spec
+```
