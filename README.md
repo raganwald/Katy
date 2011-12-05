@@ -85,7 +85,7 @@ KT([1..10])
 
 [sans-titre]: https://github.com/raganwald/homoiconic/blob/master/2011/11/sans-titre.md "Sans Titre"
   
-## Is Katy be any good?
+## Is Katy any good?
 
 [Yes][y].
 
@@ -102,3 +102,15 @@ Yes, but if you like jQuery and like Katy, you'll love [jQuery Combinators][jc].
 ## Calling a method by name is cool, but can you do more with Strings?
 
 Try `KT.installStringLambdas()`. The result is not to everybody's taste, but those who like it, like it a lot.
+
+## What's with the naming conventions?
+
+`.T` is known in some CS circles as the [Thrush][t] or `T` combinator. Likewise, `.K` is known in combinatory logic circles as the "K Combinator" or [Kestrel][k]. To simplify the explanation radically, `T` and `K` are called combinators because they combine things to produce a result in different ways. Functional programmers call such things higher-order functions, but what makes combinators interesting is that combinators work by rearranging the order of things in an expression.
+
+For example, `T` reverses the order of two things. Think about it: Instead of writing `identifiers(some_array)`, we use `T` to write `some_array.T(identifiers)`. That rearrangement is very handy for making our code conform to fluent style. Likewise, `K` leaves them in the same order but removes something. This ability to rearrange things is what makes them so useful for taking code that would normally have function calls sprinkled throughout it and rearranging it into a nice tree of method calls in fluent style.
+
+Many other combinators exist, and they are all interesting with applications for functional and OO programmers. With combinators you can even get rid of parentheses in a programming language! If you aren't familiar with Combinatory Logic, I encourage you to follow the links to my posts about Kestrels and Thrushes, and better still do a little digging about Combinatory Logic in general. It's a rich, fascinating field of study that is so simple it's incredibly easy to pick up, and it leads naturally into functional and [concatenative][joy] languages.
+
+[k]: http://github.com/raganwald/homoiconic/blob/master/2008-10-29/kestrel.markdown#readme
+[t]: http://github.com/raganwald/homoiconic/blob/master/2008-10-30/thrush.markdown#readme
+[joy]: http://github.com/raganwald/homoiconic/blob/master/2008-11-16/joy.md#readme
