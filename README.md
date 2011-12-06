@@ -89,10 +89,11 @@ KT([1..10])
 
 [I agree][sans-titre], but that being said:
 
-1. You can use Katy *now* instead of waiting to see if CoffeeScript adopts a syntax for chaining methods, and;
+1. You can use Katy *now* instead of waiting to see if CoffeeScript adopts [a syntax for chaining methods][1495], and;
 2. The `.K` and `.T` methods turn any function into something you can call like a method, which makes your code read more cleanly.
 
 [sans-titre]: https://github.com/raganwald/homoiconic/blob/master/2011/11/sans-titre.md "Sans Titre"
+[1495]: https://github.com/jashkenas/coffee-script/issues/1495 "Improve chaining syntax"
   
 ## Is Katy any good?
 
