@@ -55,7 +55,7 @@ someArray
   .T(someOtherFilter)
 ```
 
-This is cleaner than trying to mix ordinary functions with methods and adopting tenporary variables when you want to work around what the function was written to return. In this example, having extended `Array.prototype` with `.K` and `.T` once, you need not extend it any more to add your own custom methods.
+This is cleaner than trying to mix ordinary functions with methods and adopting temporary variables when you want to work around what the function was written to return. In this example, having extended `Array.prototype` with `.K` and `.T` once, you need not extend it any more to add your own custom methods.
 
 To recap:
 
@@ -82,7 +82,7 @@ KT([1..10])
 
 [I agree][sans-titre], but that being said:
 
-1. You can use katy now instead of waiting to see if Coffeescript adopts a syntax for chaining methods, and;
+1. You can use Katy *now* instead of waiting to see if Coffeescript adopts a syntax for chaining methods, and;
 2. The `.K` and `.T` methods turn any function into something you can call like a method, which makes your code read more cleanly.
 
 [sans-titre]: https://github.com/raganwald/homoiconic/blob/master/2011/11/sans-titre.md "Sans Titre"
