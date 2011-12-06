@@ -17,7 +17,7 @@ KT.mixInto(String)
   
 # T calls a function on the receiver and returns the result
 
-'Hello'.K (s) -> s + ' World'
+'Hello'.T (s) -> s + ' World'
   # => returns 'Hello World'
 ```
 
