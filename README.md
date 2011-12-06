@@ -1,11 +1,11 @@
-Katy: Coffeescript Combinators
+Katy: CoffeeScript Combinators
 ===
 
-Katy makes writing [fluent][fluent] Coffeescript easy by providing the `.K` and `.T` combinators for Coffeescript objects.
+Katy makes writing [fluent][fluent] CoffeeScript easy by providing the `.K` and `.T` combinators for CoffeeScript objects.
 
 The **tl;dr** is that Katy adds two methods, `.K` and `.T` to any class or classes you desire:
 
-```coffeescript
+```CoffeeScript
 KT = require('Katy').KT
 
 KT.mixInto(String)
@@ -23,7 +23,7 @@ KT.mixInto(String)
 
 You can also call any method by name:
 
-```coffeescript
+```CoffeeScript
 KT.mixInto(Array)
 
 [1..10]
@@ -42,7 +42,7 @@ You're familiar with [fluent interfaces][fluent]. They're great, but they rely o
 
 [fluent]: http://en.wikipedia.org/wiki/Fluent_interface
 
-```coffeescript
+```CoffeeScript
 require 'underscore'
 
 identifiers = (arrOfSymbols) ->
@@ -66,7 +66,7 @@ To recap:
 
 I agree. `KT(foo).K(...)` and `KT(foo).T(...)` work just fine without mixing `.K` and `.T` into an existing class, much as `_(...).tap` and other methods work without modifying an existing class. Also:
 
-```coffeescript
+```CoffeeScript
 
 KT([1..10])
   .chain()
@@ -82,7 +82,7 @@ KT([1..10])
 
 [I agree][sans-titre], but that being said:
 
-1. You can use Katy *now* instead of waiting to see if Coffeescript adopts a syntax for chaining methods, and;
+1. You can use Katy *now* instead of waiting to see if CoffeeScript adopts a syntax for chaining methods, and;
 2. The `.K` and `.T` methods turn any function into something you can call like a method, which makes your code read more cleanly.
 
 [sans-titre]: https://github.com/raganwald/homoiconic/blob/master/2011/11/sans-titre.md "Sans Titre"
