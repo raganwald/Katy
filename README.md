@@ -64,17 +64,24 @@ To recap:
 
 ## Monkey-patching is evil!
 
-I agree. `KT(foo).K(...)` and `KT(foo).T(...)` work just fine without mixing `.K` and `.T` into an existing class, much as `_(...).tap` and other methods work without modifying an existing class. Also:
+No problem. You don't need to mix it into a class:
 
 ```CoffeeScript
+KT('Hello')
+  .K( (s) -> s + ' World' )
+    # => returns 'Hello'
 
+KT('Hello')
+  .T( (s) -> s + ' World' )
+    # => returns 'Hello World'
+  
 KT([1..10])
   .chain()
-  .K('pop')
-  .K('pop')
-  .K('pop')
-  .T('pop')
-  .value()
+    .K('pop')
+    .K('pop')
+    .K('pop')
+    .T('pop')
+      .value()
   # => returns 7
 ```
 
