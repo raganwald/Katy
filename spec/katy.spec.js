@@ -95,8 +95,20 @@
       it('should accept a string lambda for K', function() {
         return expect(k123.K('.concat([4, 5, 6])')).toEqual([1, 2, 3]);
       });
-      return it('should accept a string lambda for T', function() {
+      it('should accept a string lambda for T', function() {
         return expect(k123.T('.concat([4, 5, 6])')).toEqual([1, 2, 3, 4, 5, 6]);
+      });
+      it('should support ->', function() {
+        return expect(k123.T('a -> a.length')).toEqual(3);
+      });
+      it('should support _', function() {
+        window.world = 'World';
+        return expect(KT('Hello').T("_ + ' ' + world")).toEqual('Hello World');
+      });
+      return it('should support point-free expressions', function() {
+        expect(KT('Hello').T("+ ' World'")).toEqual('Hello World');
+        expect(KT('Hello').T("+", ' World')).toEqual('Hello World');
+        return expect(KT('Hello').T(".length")).toEqual(5);
       });
     });
     return describe('messages', function() {
