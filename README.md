@@ -130,6 +130,10 @@ KT([1..10])
   # => returns 7
 ```
 
+For what it's worth, altering core classes is tricky if you're writing a library for others to use, but could be [just fine][nobreak] if you're writing an application and not making life tricky for downstream programmers.
+
+[nobreak]: http://javascriptweblog.wordpress.com/2011/12/05/extending-javascript-natives/ "Extending JavaScript Natives"
+
 ## String Lambdas
 
 As you know, Katy accepts any function as an argument to `.K` and `.T`, as in: 
@@ -148,7 +152,9 @@ KT('Hello')
     // => returns 'Hello World'
 ```
 
-The ceremonial trappings overwhelm the logic of what you're writing. That's doubly painful since you're already adding some extra indirection by using Katy. So, Katy lets you define one-liner functions using a highly abbreviated syntax invented by [Oliver Steele][osteele] called "String Lambdas." Here's the cheat sheet:
+The ceremonial trappings overwhelm the logic of what you're writing. That's doubly painful since you're already adding some extra indirection by using Katy. So, Katy lets you define one-liner functions using a highly abbreviated syntax invented by [Oliver Steele][osteele] called "String Lambdas."
+
+Here's the cheat sheet:
 
 ```javascript
 
