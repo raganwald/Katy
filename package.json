@@ -2,7 +2,7 @@
   "author": "Reg Braithwaite <raganwald@gmail.com> (http://reginald.braythwayt.com)",
   "name": "Katy",
   "description": "CoffeeScript Combinators",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "homepage": "https://github.com/raganwald/Katy",
   "repository": {
     "type": "git",
