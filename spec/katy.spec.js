@@ -91,7 +91,6 @@
   describe("Functionalizing Strings", function() {
     describe("lambdas", function() {
       var k123;
-      KT.installStringLambdas();
       k123 = KT([1, 2, 3]);
       it('should accept a string lambda for K', function() {
         return expect(k123.K('.concat([4, 5, 6])')).toEqual([1, 2, 3]);

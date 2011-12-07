@@ -1,9 +1,9 @@
 Katy: CoffeeScript Combinators
 ===
 
-Katy makes writing [fluent][fluent] CoffeeScript easy by providing the `.K` and `.T` combinators for CoffeeScript objects.
+Katy makes writing [fluent][fluent] CoffeeScript (and JavaScript!) easy by providing the `.K` and `.T` combinators for ordinary classes and objects.
 
-The **tl;dr** is that Katy adds two methods, `.K` and `.T` to any class or classes you desire:
+The **tl;dr** is that Katy adds two methods, `.K` and `.T` to any classes you desire:
 
 ```CoffeeScript
 KT = require('Katy').KT
@@ -64,7 +64,7 @@ To recap:
 
 ## Monkey-patching is evil!
 
-No problem. You don't need to mix it into a class:
+No problem. You don't need to mix it into a class, you can "wrap" an object without altering its prototype:
 
 ```CoffeeScript
 KT('Hello')
@@ -74,7 +74,14 @@ KT('Hello')
 KT('Hello')
   .T( (s) -> s + ' World' )
     # => returns 'Hello World'
-  
+```
+
+You can also 'chain' multiple invocations in a style borrowed from [Monads][m] and [Underscore][u]:
+
+[m]: http://en.wikipedia.org/wiki/Monad_(functional_programming)
+[u]: http://documentcloud.github.com/underscore/
+
+```coffeescript
 KT([1..10])
   .chain()
     .K('pop')
@@ -108,10 +115,6 @@ KT([1..10])
 Yes, but if you like jQuery and like Katy, you'll love [jQuery Combinators][jc].
 
 [jc]: https://github.com/raganwald/JQuery-Combinators
-
-## Calling a method by name is cool, but can you do more with Strings?
-
-Try `KT.installStringLambdas()`. The result is not to everybody's taste, but those who like it, like it a lot.
 
 ## What's with the naming conventions?
 

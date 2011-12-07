@@ -87,8 +87,6 @@ describe "Functionalizing Strings", ->
 
   describe "lambdas", ->
 
-    KT.installStringLambdas()
-
     k123 = KT([1..3])
 
     it 'should accept a string lambda for K', ->
