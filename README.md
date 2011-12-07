@@ -154,7 +154,7 @@ KT('Hello').T( ".toUpperCase()" ) // => 'HELLO'
 KT('Hello').T( ".length" ) // => 5
 ```
 
-## String lambdas? You can't be serious!
+## String lambdas? You can't be serious!?
 
 [Oh yes I can][sl].
 
