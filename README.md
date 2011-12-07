@@ -1,9 +1,11 @@
 Katy: CoffeeScript Combinators
 ===
 
-Katy makes writing [fluent][fluent] CoffeeScript (and JavaScript!) easy by providing the `.K` and `.T` combinators for ordinary classes and objects.
+Katy makes writing [fluent][fluent] CoffeeScript (and JavaScript!) easy by providing the `.K` and `.T` combinators for ordinary classes and objects. Snarf the source here, or install it with `npm install Katy`.
 
-The **tl;dr** is that Katy adds two methods, `.K` and `.T` to any classes you desire:
+## tl;dr
+
+Katy adds two methods, `.K` and `.T` to any classes or objects you desire:
 
 ```CoffeeScript
 KT = require('Katy').KT
@@ -20,27 +22,14 @@ KT.mixInto(String)
 'Hello'.T( (s) -> s + ' World' )
   # => returns 'Hello World'
 ```
+  
+## Is it any good?
 
-You can also call any method by name:
+[Yes][y].
 
-```CoffeeScript
-KT.mixInto(Array)
+## .T
 
-[1..10]
-  .K('pop')
-  .K('pop')
-  .K('pop')
-  .T('pop')
-  # => returns 7
-```
-
-Snarf the source here, or install it with `npm install Katy`.
-
-## How does that make my code more fluent?
-
-You're familiar with [fluent interfaces][fluent]. They're great, but they rely on the author of the API making sure that each function returns its receiver. The `.K` method allows you to make any function or method "fluent" even if the original author has other ideas. The `.K` and `.T` methods also allow you to write your own methods and 'call' them just as if they were baked into the original object. For example, you can fake an `identifiers` filter for arrays of strings:
-
-[fluent]: http://en.wikipedia.org/wiki/Fluent_interface
+`.T` is a method that turns any function into a method. For example, if you write:
 
 ```CoffeeScript
 require 'underscore'
@@ -52,14 +41,66 @@ identifiers = (arrOfSymbols) ->
 idents = someArray.T(identifiers)
 ```
 
-This is cleaner than trying to mix ordinary functions with methods and adopting temporary variables when you want to work around what the function was written to return. In this example, having extended `Array.prototype` with `.K` and `.T` once, you need not extend it any more to add your own custom methods.
+`.T` lets you use `identifiers` as if it were a method baked into `Array`. You could write `identifiers(someArray)`, of course, but sometimes you are chaining together multiple calls, you want your expression to read very naturally from left to right on one line or from top to bottom on one line. [No detail is too small][nd]:
+
+[nd]: http://weblog.raganwald.com/2008/01/no-detail-too-small.html "No Detail Too Small"
+
+```CoffeeScript
+require 'underscore'
+
+identifiers = (arrOfSymbols) ->
+  _.select arrOfSymbols, (str) ->
+    /^[_a-zA-Z]\w*$/.test(str)
+  
+sorted_list_of_identifier_lengths = someArray
+  .T(identifiers)
+  .T(_.map, (i) -> i.length) # yes, you can pass extra parameters when you call .T
+  .sort()
+```
+
+This gets rid of nesting calls to `identifier` and `_.map`, so the data "flows" from top to bottom. Speaking of `_.map`, we can use `expr.T(_)` wherever we would ordinarily use `_(expr)`:
+
+```CoffeeScript
+require 'underscore'
+
+identifiers = (arrOfSymbols) ->
+  _.select arrOfSymbols, (str) ->
+    /^[_a-zA-Z]\w*$/.test(str)
+  
+sorted_list_of_identifier_lengths = someArray
+  .T(identifiers)
+  .T(_).map( (i) -> i.length)
+  .sort()
+```
+
+Yes, `.T` is very much like having C#'s extension methods in your CoffeeScript and JavaScript projects.
+
+## .K
+
+You're familiar with [fluent interfaces][fluent]. They're great, but they rely on the author of the API making sure that each function returns its receiver. The `.K` method allows you to make any function or method "fluent" even if the original author has other ideas. It's very similar to [Underscore][u]'s `_.tap` (although it has some extra tricks up its sleeve, as you'll see below).
+
+[fluent]: http://en.wikipedia.org/wiki/Fluent_interface
+
+When calling `.K` or `.T`, you can pass a function or the name of a method on the receiver. So instead of `someArray.K( (arr) -> arr.pop() )`, you can write `someArray.K('pop')` and receive `someArray` back:
+
+```CoffeeScript
+KT.mixInto(Array)
+
+[1..10]
+  .K('pop')
+  .K('pop')
+  .K('pop')
+  # => returns [1, 2, 3, 4, 5, 6, 7]
+```
+
+This is cleaner than trying to mix ordinary functions with methods and adopting temporary variables when you want to work around what the function was written to return. In this example, having extended `Array.prototype` with `.K` and `.T` once, you need not extend it any more to add your own custom methods or to use a built-in method "fluently."
 
 To recap:
 
 1. You can make any function into something that can be called like a method, making your code read more naturally, and;
 2. You can give any function or built-in method either "fluent" (return the receiver) or "pipeline" (return its value) semantics as you please.
 
-## Monkey-patching is evil!
+## Monkey-patching core classes is evil!
 
 No problem. You don't need to mix it into a class, you can "wrap" an object without altering its prototype:
 
@@ -88,10 +129,6 @@ KT([1..10])
       .value()
   # => returns 7
 ```
-  
-## Is it any good?
-
-[Yes][y].
 
 ## String Lambdas
 
