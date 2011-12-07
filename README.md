@@ -120,16 +120,14 @@ The ceremonial trappings overwhelm the logic of what you're writing. That's doub
 // Like CoffeeScript, Katy supports using -> in a string. You don't need to parenthesize
 // the arguments and no explicit "return" is needed.
 
-KT('Hello').T( "s -> s + ' World'" )
-  // => returns 'Hello World'
+KT('Hello').T( "s -> s + ' World'" ) // => returns 'Hello World'
   
 // implicit parameters
 //
 // If you don't use '->', Katy will attempt to infer the parameters in your expression
 // from left to right:
 
-KT('Hello').T( "str + ' World'" )
-  // => returns 'Hello World'
+KT('Hello').T( "str + ' World'" ) // => returns 'Hello World'
   
 // _
 //
@@ -140,25 +138,20 @@ KT('Hello').T( "str + ' World'" )
 
 window.world = 'World'
 
-KT('Hello').T( "_ + ' ' + world" )
-  // => returns 'Hello World'
+KT('Hello').T( "_ + ' ' + world" ) // => returns 'Hello World'
 
 // point-free
 //
 // For certain very simple expressions, Katy will assume parameters even if you don't supply them!
 
-KT('Hello').T( "+ ' World'" )
-  // => returns 'Hello World'
-KT('Hello').T( "+", ' World' )
-  // => returns 'Hello World'
+KT('Hello').T( "+ ' World'" )  // => returns 'Hello World'
+KT('Hello').T( "+", ' World' ) // => returns 'Hello World'
   
 // This works for simple message sending and property access as well:
 
-KT('Hello').T( ".toUpperCase()" )
-  // => 'HELLO'
+KT('Hello').T( ".toUpperCase()" ) // => 'HELLO'
 
-KT('Hello').T( ".length" )
-  // => 5
+KT('Hello').T( ".length" ) // => 5
 ```
 
 ## String lambdas? You can't be serious!
