@@ -1,4 +1,4 @@
-Katy: CoffeeScript Combinators
+Katy: CoffeeScript and JavaScript Combinators
 ===
 
 Katy makes writing [fluent][fluent] CoffeeScript (and JavaScript!) easy by providing the `.K` and `.T` combinators for ordinary classes and objects. Snarf the source here, or install it with `npm install Katy`.
