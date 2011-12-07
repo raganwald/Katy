@@ -97,6 +97,24 @@ describe "Functionalizing Strings", ->
 
       expect( k123.T('.concat([4, 5, 6])') ).toEqual([1..6])
 
+    it 'should support ->', ->
+
+      expect( k123.T('a -> a.length') ).toEqual(3)
+
+    it 'should support _', ->
+
+      window.world = 'World'
+
+      expect( KT('Hello').T( "_ + ' ' + world" ) ).toEqual('Hello World')
+
+    it 'should support point-free expressions', ->
+
+      expect( KT('Hello').T( "+ ' World'" ) ).toEqual('Hello World')
+
+      expect( KT('Hello').T( "+", ' World' ) ).toEqual('Hello World')
+
+      expect( KT('Hello').T( ".length" ) ).toEqual(5)
+
   describe 'messages', ->
 
     k123 = KT([1..3])

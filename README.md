@@ -91,6 +91,86 @@ KT([1..10])
       .value()
   # => returns 7
 ```
+  
+## Is it any good?
+
+[Yes][y].
+
+## String Lambdas
+
+As you know, Katy accepts any function as an argument to `.K` and `.T`, as in: 
+
+```coffeescript
+KT('Hello')
+  .T( (s) -> s + ' World' )
+    # => returns 'Hello World'
+```
+
+CoffeeScript makes writing functions pretty easy, but if you're using JavaScript, writing short functions is not quite as much fun:
+
+```javascript
+KT('Hello')
+  .T( function (s) { return s + ' World'; } )
+    # => returns 'Hello World'
+```
+
+The ceremonial trappings overwhelm the logic of what you're writing. That's doubly painful since you're already adding some extra indirection by using Katy. So, Katy lets you define one-liner functions using a highly abbreviated syntax invented by [Oliver Steele][osteele] called "String Lambdas." Here's the cheat sheet:
+
+```javascript
+
+// ->
+//
+// Like CoffeeScript, Katy supports using -> in a string. You don't need to parenthesize
+// the arguments and no explicit "return" is needed.
+
+KT('Hello').T( "s -> s + ' World'" )
+  # => returns 'Hello World'
+  
+// implicit parameters
+//
+// If you don't use '->', Katy will attempt to infer the parameters in your expression
+// from left to right:
+
+KT('Hello').T( "str + ' World'" )
+  # => returns 'Hello World'
+  
+// _
+//
+// If you use an underscore by itself, Katy will assume that's your only parameter.
+// Yes, this conflicts with the Underscore library, but that's ok: String Lambdas
+// are best for short, simple things. Note that in this example, Katy knows not
+// to assume that 'world' is a parameter.
+
+window.world = 'World'
+
+KT('Hello').T( "_ + ' ' + world" )
+  # => returns 'Hello World'
+
+// point-free
+//
+// For certain very simple expressions, Katy will assume parameters even if you don't supply them!
+
+KT('Hello').T( "+ ' World'" )
+  # => returns 'Hello World'
+KT('Hello').T( "+", ' World' )
+  # => returns 'Hello World'
+  
+// This works for simple message sending and property access as well:
+
+KT('Hello').T( ".toUpperCase()" )
+  # => 'HELLO'
+
+KT('Hello').T( ".length" )
+  # => 5
+```
+
+## String lambdas? You can't be serious!
+
+[Oh yes I can][sl].
+
+[sl]: https://github.com/raganwald/homoiconic/blob/master/2008-11-28/you_cant_be_serious.md
+
+[osteele]: http://osteele.com/
 
 ## Stuff and nonsense, this is a syntax issue, not a functional issue
 
@@ -101,10 +181,6 @@ KT([1..10])
 
 [sans-titre]: https://github.com/raganwald/homoiconic/blob/master/2011/11/sans-titre.md "Sans Titre"
 [1495]: https://github.com/jashkenas/coffee-script/issues/1495 "Improve chaining syntax"
-  
-## Is Katy any good?
-
-[Yes][y].
 
 [y]: http://news.ycombinator.com/item?id=3067434
 
