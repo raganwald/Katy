@@ -115,10 +115,12 @@ The ceremonial trappings overwhelm the logic of what you're writing. That's doub
 
 ```javascript
 
-// ->
-//
-// Like CoffeeScript, Katy supports using -> in a string. You don't need to parenthesize
-// the arguments and no explicit "return" is needed.
+/* ->
+ *
+ * Like CoffeeScript, Katy supports using -> in a string. You don't need to parenthesize
+ * the arguments and no explicit "return" is needed.
+ *
+ */
 
 KT('Hello').T( "s -> s + ' World'" )
   // => returns 'Hello World'
