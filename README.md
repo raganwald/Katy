@@ -25,7 +25,7 @@ KT.mixInto(String)
 
 ## .T
 
-`.T` is a method that turns any function into a method. For example, you can write:
+`.T` turns any function into a method. For example, you can write:
 
 ```CoffeeScript
 require 'underscore'
@@ -87,7 +87,7 @@ In summary, `.T` is very much like having C#'s extension methods in your CoffeeS
 
 ## .K
 
-You're familiar with [fluent interfaces][fluent]. They're great, but they rely on the author of the API making sure that each function returns its receiver. The `.K` method allows you to make any function or method "fluent" even if the original author has other ideas. It's very similar to [Underscore's][u] `_.tap` (although it has some extra tricks up its sleeve, as you'll see below).
+You're familiar with [fluent interfaces][fluent]. They're great, but they rely on the author of the API making sure that each function returns its receiver. `.K` allows you to make any function or method "fluent" even if the original author has other ideas. It's very similar to [Underscore's][u] `_.tap` (although it has some extra tricks up its sleeve, as you'll see below).
 
 [fluent]: http://en.wikipedia.org/wiki/Fluent_interface
 
