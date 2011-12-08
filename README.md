@@ -8,17 +8,25 @@ Katy makes writing [fluent][fluent] CoffeeScript (and JavaScript!) easy by provi
 Katy adds two methods, `.K` and `.T`, to any classes or objects you desire:
 
 ```CoffeeScript
-KT.mixInto(String)
+KT.mixInto(Array)
 
-# K calls a function on the receiver and returns the receiver
+# K calls a method on the receiver by name and returns the receiver
 
-'Hello'.K( (s) -> s + ' World' )
-  # => returns 'Hello'
+[1..10].K 'pop'
+  # => returns [1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+[1..10].K 'push', 11
+  # => returns [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+
+# K also calls a function on the receiver and returns the receiver
+
+[10..1].K (arr) -> arr.slice(3).sort (a, b) -> a - b
+  # => returns [10, 9, 8, 7, 6, 5, 4, 3, 2, 1]
   
 # T calls a function on the receiver and returns the result
 
-'Hello'.T( (s) -> s + ' World' )
-  # => returns 'Hello World'
+[10..1].T (arr) -> arr.slice(3).sort (a, b) -> a - b
+  # => returns [1, 2, 3, 4, 5, 6, 7]
 ```
 
 ## .K
