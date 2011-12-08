@@ -26,8 +26,6 @@ KT.mixInto(Array)
 # T calls a function on the receiver and returns the result
 
 [10..1].T (arr) -> arr.slice(3).sort (a, b) -> a - b
-  # => returns [1, 2, 3, 4, 5, 6, 7]
-```
 
 ## .K
 
