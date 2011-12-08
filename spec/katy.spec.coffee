@@ -146,9 +146,20 @@ describe 'chaining', ->
         .value()
     ).toEqual(7)
 
+  it 'should chain 2', ->
+
+    expect(
+      KT([10..1]).chain()
+        .K('pop')
+        .K('pop')
+        .K('pop')
+        .value()
+          .sort (a, b) -> a - b
+    ).toEqual([4..10])
+
 describe 'miscellaneous', ->
 
-  it 'should work like the docs', ->
+  it 'should work like this', ->
 
     pop_n = (arr, n) ->
       for x in [1..n]

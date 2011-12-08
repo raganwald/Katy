@@ -1,7 +1,7 @@
 Katy: CoffeeScript and JavaScript Combinators
 ===
 
-Katy makes writing [fluent][fluent] CoffeeScript (and JavaScript!) easy by providing the `.T` and `.K` combinators for ordinary classes and objects. Snarf the source here, or install it with `npm install Katy`.
+Katy makes writing [fluent][fluent] CoffeeScript (and JavaScript!) easy by providing the "K" and "T" combinators for ordinary classes and objects. In plain English, Katy lets you turn any method into a "fluent" method for chaining and Katy lets you use functions as extension methods for any object. Snarf the source here, or install it with `npm install Katy`.
 
 ## tl;dr
 
@@ -23,9 +23,123 @@ KT.mixInto(String)
   # => returns 'Hello World'
 ```
 
+## .K
+
+You're familiar with [fluent interfaces][fluent] like jQuery. A fluent interface uses methods that are written in such a way that you can "chain" methods together, producing code that reads naturally from left-to-right or from top to bottom. For example:
+
+[fluent]: http://en.wikipedia.org/wiki/Fluent_interface
+
+```javascript
+// Without fluent interface
+
+myCar = Car();
+myCar.setSpeed(100);
+myCar.setColor('blue');
+myCar.setDoors(5);
+
+// With fluent interface
+
+fluentCar = Car()
+  .setSpeed(100)
+  .setColor('blue')
+  .setDoors(5);
+```
+
+Fluent interfaces rely on the author of the API making sure that each method returns its receiver so that you can chain the next method to it. jQuery does this effectively, and libraries like [Underscore][u] provide some special support for chaining its methods as well. But what if you have some objects that weren't written with chaining in mind?
+
+Katy's `.K` allows you to make any function or method "fluent" even if the original author has other ideas. It's very similar to Underscore's `_.tap` (although it has some extra tricks up its sleeve, as you'll see below). We'll use a ridiculously simple example to demonstrate: the `.pop()` method of `Array` returns what it pops, not the array. So if you want to pop a few things off an array and then do something with what's left, you can mix Katy into `Array` and use `.K` to call `.pop` by name:
+
+```CoffeeScript
+# Example turning .pop() into a fluent method
+
+KT.mixInto(Array)
+
+[10..1]
+  .K('pop')
+  .K('pop')
+  .K('pop')
+  .sort (a, b) -> a - b
+  # => returns [4, 5, 6, 7, 8, 9, 10]
+```
+
+Another aspect of fluent interfaces is that you don't want to mix function calls with methods, you want to make everything read naturally in one direction. So you can call `.K` with a function (either named or anonymous) instead of a method name. Compare these two examples:
+
+```CoffeeScript
+# returns an array of things you pop
+# e.g pop_n([10..1], 3) => [1, 2, 3]
+
+pop_n = (arr, n) -> 
+  for x in [1..n]
+    arr.pop()
+    
+# Without Katy
+
+arr = [10..1]
+pop_n(arr, 3)
+arr
+  .sort (a, b) -> a - b
+  # => returns [4, 5, 6, 7, 8, 9, 10]
+
+# With Katy
+
+KT.mixInto(Array)
+
+[10..1]
+  .K( pop_n, 3 )
+  .sort (a, b) -> a - b
+  # => returns [4, 5, 6, 7, 8, 9, 10]
+```
+
+Some people would say this is a minor detail, but when writing code for people to read, [no detail is too small][nd]. Hey, that `.sort (a, b) -> a - b` looks handy. Let's make it a function so we can use it again:
+
+[nd]: http://weblog.raganwald.com/2008/01/no-detail-too-small.html "No Detail Too Small"
+
+```coffeescript
+numsort = (arr) ->
+  arr.sort (a, b) -> a - b
+
+[10..1]
+  .K( pop_n, 3 )
+  .K( numsort )
+  # => returns [4, 5, 6, 7, 8, 9, 10]
+```
+
+Passing functions to `.K` provides two wins: It makes the functions "fluent," and you also get something a little like a C# extension methods: You get to write your own methods like `pop_n` and `numsort` for classes without opening them up and monkey-patching them.
+
+To recap, when you use `.K`:
+
+1. You can give any built-in method either "fluent" (return the receiver) semantics, and;
+2. You can make any function into something that can be called like a method, making your code read more naturally and allowing you to extend classes without opening up their prototypes.
+
 ## .T
 
-`.T` turns any function into a method. For example, you can write:
+As you saw above, Katy's `.K` allows you to extend classes with your own functions, just as if they were built-in methods, and it makes them fluent by returning the receiver. Sometimes you don't want that. For example, let's say you like `numsort`, but you want to return a *copy* of the array that is numerically sorted.
+
+```coffeescript
+sortedcopy = (arr) ->
+  arr
+    .slice(0)
+      .sort (a, b) -> a - b
+
+[10..1]
+  .K( sortedcopy )
+  # => returns [10, 9, 8, 7, 6, 5, 4, 3, 2, 1] BZZT! FAIL!!
+```
+
+`.K` isn't what we want because `.K` always returns the receiver. But we like being able to fluently extend objects with our own functions. What we need is a method that takes a function as an argument and calls the function with the receiver (and any additional arguments, of course). Naturally, katy provides this, it's called `.T`:
+
+```coffeescript
+sortedcopy = (arr) ->
+  arr
+    .slice(0)
+      .sort (a, b) -> a - b
+
+[10..1]
+  .T( sortedcopy )
+  # => returns [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] WIN!
+```
+
+Here's another example, a custom array filter based on Underscore's `.select`
 
 ```CoffeeScript
 require 'underscore'
@@ -37,11 +151,7 @@ identifiers = (arrOfSymbols) ->
 idents = someArray.T(identifiers)
 ```
 
-`.T` lets you use `identifiers` as if it were a method baked into `Array`. You could write `identifiers(someArray)`, of course, but sometimes you are chaining together multiple calls, you want your expression to read very naturally from left to right on one line or from top to bottom on one line.
-
-[No detail is too small][nd]:
-
-[nd]: http://weblog.raganwald.com/2008/01/no-detail-too-small.html "No Detail Too Small"
+`.T` lets you use `identifiers` as if it were a method baked into `Array`. You could write `identifiers(someArray)`, but as we saw above, when you are chaining together multiple calls, you want your expression to read very naturally from left to right on one line or from top to bottom on one line.
 
 ```CoffeeScript
 require 'underscore'
@@ -71,7 +181,7 @@ sorted_list_of_identifier_lengths = someArray
   .sort()
 ```
 
-You can also pass additional parameters to your functions. The function is called with its first parameter being the receiver and subsequent parameters being anything you pass in:
+Like we saw with `.K`, you can also pass additional parameters to your functions. The function is called with its first parameter being the receiver and subsequent parameters being anything you pass in:
 
 ```CoffeeScript
 KT.mixInto(Array)
@@ -85,50 +195,11 @@ pop_n = (arr, n) ->
   # => returns [10..8], an array of the values popped
 ```
 
-In summary, `.T` is very much like having C#'s extension methods in your CoffeeScript and JavaScript projects.
-
-## .K
-
-You're familiar with [fluent interfaces][fluent]. They're great, but they rely on the author of the API making sure that each function returns its receiver. `.K` allows you to make any function or method "fluent" even if the original author has other ideas. It's very similar to [Underscore's][u] `_.tap` (although it has some extra tricks up its sleeve, as you'll see below).
-
-[fluent]: http://en.wikipedia.org/wiki/Fluent_interface
-
-Like `.T`, you can pass in a function (named or anonymous) and additional parameters. The difference is that it returns the receiver, not what the function returns:
-
-```CoffeeScript
-KT.mixInto(Array)
-
-pop_n = (arr, n) -> 
-  for x in [1..n]
-    arr.pop()
-
-[1..10]
-  .K( pop_n, 3 )
-  # => returns [1, 2, 3, 4, 5, 6, 7]
-```
-
-When calling `.K` or `.T`, you can also pass the name of a method on the receiver. So instead of `someArray.K( (arr) -> arr.pop() )`, you can write `someArray.K('pop')` and receive `someArray` back:
-
-```CoffeeScript
-KT.mixInto(Array)
-
-[1..10]
-  .K('pop')
-  .K('pop')
-  .K('pop')
-  # => returns [1, 2, 3, 4, 5, 6, 7]
-```
-
-This is very handy with `.K` because it allows you to turn a non-fluent method into a fluent method. Using `.K` is also cleaner than trying to mix ordinary functions with methods and adopting temporary variables when you want to work around what the function was written to return. In this example, having extended `Array.prototype` with `.K` and `.T` once, you need not extend it any more to add your own custom methods or to use a built-in method "fluently."
-
-To recap:
-
-1. You can make any function into something that can be called like a method, making your code read more naturally, and;
-2. You can give any function or built-in method either "fluent" (return the receiver) or "pipeline" (return its value) semantics as you please.
+In summary, `.T` is very much like having C#'s extension methods in your CoffeeScript and JavaScript projects, without returning the receiver.
 
 ## Monkey-patching core classes is evil!
 
-No problem. You don't need to mix it into a class, you can "wrap" an object without altering its prototype:
+No problem. You don't need to mix it into a core class, you can "wrap" an object without altering its prototype:
 
 ```CoffeeScript
 KT('Hello')
@@ -156,7 +227,7 @@ KT([1..10])
   # => returns 7
 ```
 
-For what it's worth, altering core classes is tricky if you're writing a library for others to use, but could be [just fine][nobreak] if you're writing an application and not making life tricky for downstream programmers.
+For what it's worth, altering core classes is tricky if you're writing a library for others to use, but could be [just fine][nobreak] if you're writing an application and not making life tricky for downstream programmers. And of course, you can mix Katy into your own classes while wrapping core classes like `Array` if you prefer.
 
 [nobreak]: http://javascriptweblog.wordpress.com/2011/12/05/extending-javascript-natives/ "Extending JavaScript Natives"
 

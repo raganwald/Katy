@@ -125,13 +125,18 @@
     it('should not be mixed into array', function() {
       return expect([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]).not.toRespondToAny('K', 'T');
     });
-    return it('should chain', function() {
+    it('should chain', function() {
       return expect(KT([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]).chain().K('pop').K('pop').K('pop').T('pop').value()).toEqual(7);
+    });
+    return it('should chain 2', function() {
+      return expect(KT([10, 9, 8, 7, 6, 5, 4, 3, 2, 1]).chain().K('pop').K('pop').K('pop').value().sort(function(a, b) {
+        return a - b;
+      })).toEqual([4, 5, 6, 7, 8, 9, 10]);
     });
   });
 
   describe('miscellaneous', function() {
-    return it('should work like the docs', function() {
+    return it('should work like this', function() {
       var pop_n;
       pop_n = function(arr, n) {
         var x, _results;
