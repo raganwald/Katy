@@ -22,10 +22,6 @@ KT.mixInto(String)
 'Hello'.T( (s) -> s + ' World' )
   # => returns 'Hello World'
 ```
-  
-## Is it any good?
-
-[Yes][y].
 
 ## .T
 
@@ -197,15 +193,13 @@ KT('Hello').T( ".toUpperCase()" ) // => 'HELLO'
 KT('Hello').T( ".length" ) // => 5
 ```
 
-## String lambdas? You can't be serious!?
-
-[Oh yes I can][sl].
+You can't be serious!? [Oh yes I can][sl]. String lambdas are slower than "native" JavaScript, but when used judiciously they make your code easier to read and understand. Perhaps not easier to read and understand by a junior developer who is unfamiliar with anything you can't look up on w3schools, but easier to read and understand by an experienced colleague working with the same code base? Absolutely.
 
 [sl]: https://github.com/raganwald/homoiconic/blob/master/2008-11-28/you_cant_be_serious.md
 
 [osteele]: http://osteele.com/
 
-## Stuff and nonsense, this is a syntax issue, not a functional issue
+## Katy is the wrong approach, method chaining and cascading is a syntax issue, not a functional issue
 
 [I agree][sans-titre], but that being said:
 
@@ -219,10 +213,6 @@ KT('Hello').T( ".length" ) // => 5
 
 [um]: https://github.com/raganwald/Underscore-Matchers-for-Jasmine
 
-## Cool! Does it work with jQuery?
-
-Yes, but if you like jQuery and like Katy, you'll love [jQuery Combinators][jc].
-
 [jc]: https://github.com/raganwald/JQuery-Combinators
 
 ## What's with the naming conventions?
@@ -232,6 +222,10 @@ Yes, but if you like jQuery and like Katy, you'll love [jQuery Combinators][jc].
 For example, `T` reverses the order of two things. Think about it: Instead of writing `identifiers(some_array)`, we use `T` to write `some_array.T(identifiers)`. That rearrangement is very handy for making our code conform to fluent style. Likewise, `K` leaves them in the same order but removes something. This ability to rearrange things is what makes them so useful for taking code that would normally have function calls sprinkled throughout it and rearranging it into a nice tree of method calls in fluent style.
 
 Many other combinators exist, and they are all interesting with applications for functional and OO programmers. With combinators you can even get rid of parentheses in a programming language! If you aren't familiar with Combinatory Logic, I encourage you to follow the links to my posts about Kestrels and Thrushes, and better still do a little digging about Combinatory Logic in general. It's a rich, fascinating field of study that is so simple it's incredibly easy to pick up, and it leads naturally into functional and [concatenative][joy] languages.
+  
+## Is it any good?
+
+[Yes][y]. And by the way if you like Katy, you'll love [jQuery Combinators][jc].
 
 License
 ---
