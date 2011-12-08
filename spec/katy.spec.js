@@ -1,5 +1,7 @@
 (function() {
-  var KT;
+  var KT, global;
+
+  global = this;
 
   KT = require('../lib/katy.coffee').KT;
 
@@ -101,10 +103,6 @@
       it('should support ->', function() {
         return expect(k123.T('a -> a.length')).toEqual(3);
       });
-      it('should support _', function() {
-        window.world = 'World';
-        return expect(KT('Hello').T("_ + ' ' + world")).toEqual('Hello World');
-      });
       return it('should support point-free expressions', function() {
         expect(KT('Hello').T("+ ' World'")).toEqual('Hello World');
         expect(KT('Hello').T("+", ' World')).toEqual('Hello World');
@@ -129,6 +127,22 @@
     });
     return it('should chain', function() {
       return expect(KT([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]).chain().K('pop').K('pop').K('pop').T('pop').value()).toEqual(7);
+    });
+  });
+
+  describe('miscellaneous', function() {
+    return it('should work like the docs', function() {
+      var pop_n;
+      pop_n = function(arr, n) {
+        var x, _results;
+        _results = [];
+        for (x = 1; 1 <= n ? x <= n : x >= n; 1 <= n ? x++ : x--) {
+          _results.push(arr.pop());
+        }
+        return _results;
+      };
+      expect(KT([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]).T(pop_n, 3)).toEqual([10, 9, 8]);
+      return expect(KT([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]).K(pop_n, 3)).toEqual([1, 2, 3, 4, 5, 6, 7]);
     });
   });
 

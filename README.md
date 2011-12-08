@@ -69,15 +69,43 @@ sorted_list_of_identifier_lengths = someArray
   .sort()
 ```
 
-Yes, `.T` is very much like having C#'s extension methods in your CoffeeScript and JavaScript projects.
+You can also pass additional parameters to your functions. The function is called with its first parameter being the receiver and subsequent parameters being anything you pass in:
+
+```CoffeeScript
+KT.mixInto(Array)
+
+pop_n = (arr, n) -> 
+  for x in [1..n]
+    arr.pop()
+
+[1..10]
+  .T( pop_n, 3 )
+  # => returns [10..8], an array of the values popped
+```
+
+In summary, `.T` is very much like having C#'s extension methods in your CoffeeScript and JavaScript projects.
 
 ## .K
 
-You're familiar with [fluent interfaces][fluent]. They're great, but they rely on the author of the API making sure that each function returns its receiver. The `.K` method allows you to make any function or method "fluent" even if the original author has other ideas. It's very similar to [Underscore][u]'s `_.tap` (although it has some extra tricks up its sleeve, as you'll see below).
+You're familiar with [fluent interfaces][fluent]. They're great, but they rely on the author of the API making sure that each function returns its receiver. The `.K` method allows you to make any function or method "fluent" even if the original author has other ideas. It's very similar to [Underscore's][u] `_.tap` (although it has some extra tricks up its sleeve, as you'll see below).
 
 [fluent]: http://en.wikipedia.org/wiki/Fluent_interface
 
-When calling `.K` or `.T`, you can pass a function or the name of a method on the receiver. So instead of `someArray.K( (arr) -> arr.pop() )`, you can write `someArray.K('pop')` and receive `someArray` back:
+Like `.T`, you can pass in a function (named or anonymous) and additional parameters. The difference is that it returns the receiver, not what the function returns:
+
+```CoffeeScript
+KT.mixInto(Array)
+
+pop_n = (arr, n) -> 
+  for x in [1..n]
+    arr.pop()
+
+[1..10]
+  .K( pop_n, 3 )
+  # => returns [1, 2, 3, 4, 5, 6, 7]
+```
+
+When calling `.K` or `.T`, you can also pass the name of a method on the receiver. So instead of `someArray.K( (arr) -> arr.pop() )`, you can write `someArray.K('pop')` and receive `someArray` back:
 
 ```CoffeeScript
 KT.mixInto(Array)
@@ -89,7 +117,7 @@ KT.mixInto(Array)
   # => returns [1, 2, 3, 4, 5, 6, 7]
 ```
 
-This is cleaner than trying to mix ordinary functions with methods and adopting temporary variables when you want to work around what the function was written to return. In this example, having extended `Array.prototype` with `.K` and `.T` once, you need not extend it any more to add your own custom methods or to use a built-in method "fluently."
+This is very handy with `.K` because it allows you to turn a non-fluent method into a fluent method. Using `.K` is also cleaner than trying to mix ordinary functions with methods and adopting temporary variables when you want to work around what the function was written to return. In this example, having extended `Array.prototype` with `.K` and `.T` once, you need not extend it any more to add your own custom methods or to use a built-in method "fluently."
 
 To recap:
 

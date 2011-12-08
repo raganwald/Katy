@@ -1,3 +1,5 @@
+global = this
+
 KT = require('../lib/katy.coffee').KT
 require 'UnderscoreMatchersForJasmine'
 
@@ -101,11 +103,11 @@ describe "Functionalizing Strings", ->
 
       expect( k123.T('a -> a.length') ).toEqual(3)
 
-    it 'should support _', ->
-
-      window.world = 'World'
-
-      expect( KT('Hello').T( "_ + ' ' + world" ) ).toEqual('Hello World')
+    # it 'should support _', ->
+    #
+    #   global.world = 'World'
+    #
+    #   expect( KT('Hello').T( "_ + ' ' + world" ) ).toEqual('Hello World')
 
     it 'should support point-free expressions', ->
 
@@ -144,3 +146,14 @@ describe 'chaining', ->
         .value()
     ).toEqual(7)
 
+describe 'miscellaneous', ->
+
+  it 'should work like the docs', ->
+
+    pop_n = (arr, n) ->
+      for x in [1..n]
+        arr.pop()
+
+    expect( KT([1..10]).T( pop_n, 3 ) ).toEqual([10..8])
+
+    expect( KT([1..10]).K( pop_n, 3 ) ).toEqual([1..7])
