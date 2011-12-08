@@ -37,7 +37,9 @@ identifiers = (arrOfSymbols) ->
 idents = someArray.T(identifiers)
 ```
 
-`.T` lets you use `identifiers` as if it were a method baked into `Array`. You could write `identifiers(someArray)`, of course, but sometimes you are chaining together multiple calls, you want your expression to read very naturally from left to right on one line or from top to bottom on one line. [No detail is too small][nd]:
+`.T` lets you use `identifiers` as if it were a method baked into `Array`. You could write `identifiers(someArray)`, of course, but sometimes you are chaining together multiple calls, you want your expression to read very naturally from left to right on one line or from top to bottom on one line.
+
+[No detail is too small][nd]:
 
 [nd]: http://weblog.raganwald.com/2008/01/no-detail-too-small.html "No Detail Too Small"
 
@@ -227,6 +229,14 @@ You can't be serious!? [Oh yes I can][sl]. String lambdas are slower than "nativ
 
 [osteele]: http://osteele.com/
 
+## What's with the naming conventions?
+
+`.T` is known in some CS circles as the [Thrush][t] or `T` combinator. Likewise, `.K` is known in combinatory logic circles as the "K Combinator" or [Kestrel][k]. To simplify the explanation radically, `T` and `K` are called combinators because they combine things to produce a result in different ways. Functional programmers call such things higher-order functions, but what makes combinators interesting is that combinators work by rearranging the order of things in an expression.
+
+For example, `T` reverses the order of two things. Think about it: Instead of writing `identifiers(some_array)`, we use `T` to write `some_array.T(identifiers)`. That rearrangement is very handy for making our code conform to fluent style. Likewise, `K` leaves them in the same order but removes something. This ability to rearrange things is what makes them so useful for taking code that would normally have function calls sprinkled throughout it and rearranging it into a nice tree of method calls in fluent style.
+
+Many other combinators exist, and they are all interesting with applications for functional and OO programmers. With combinators you can even get rid of parentheses in a programming language! If you aren't familiar with Combinatory Logic, I encourage you to follow the links to my posts about Kestrels and Thrushes, and better still do a little digging about Combinatory Logic in general. It's a rich, fascinating field of study that is so simple it's incredibly easy to pick up, and it leads naturally into functional and [concatenative][joy] languages.
+
 ## Katy is the wrong approach, method chaining and cascading is a syntax issue, not a functional issue
 
 [I agree][sans-titre], but that being said:
@@ -242,18 +252,10 @@ You can't be serious!? [Oh yes I can][sl]. String lambdas are slower than "nativ
 [um]: https://github.com/raganwald/Underscore-Matchers-for-Jasmine
 
 [jc]: https://github.com/raganwald/JQuery-Combinators
-
-## What's with the naming conventions?
-
-`.T` is known in some CS circles as the [Thrush][t] or `T` combinator. Likewise, `.K` is known in combinatory logic circles as the "K Combinator" or [Kestrel][k]. To simplify the explanation radically, `T` and `K` are called combinators because they combine things to produce a result in different ways. Functional programmers call such things higher-order functions, but what makes combinators interesting is that combinators work by rearranging the order of things in an expression.
-
-For example, `T` reverses the order of two things. Think about it: Instead of writing `identifiers(some_array)`, we use `T` to write `some_array.T(identifiers)`. That rearrangement is very handy for making our code conform to fluent style. Likewise, `K` leaves them in the same order but removes something. This ability to rearrange things is what makes them so useful for taking code that would normally have function calls sprinkled throughout it and rearranging it into a nice tree of method calls in fluent style.
-
-Many other combinators exist, and they are all interesting with applications for functional and OO programmers. With combinators you can even get rid of parentheses in a programming language! If you aren't familiar with Combinatory Logic, I encourage you to follow the links to my posts about Kestrels and Thrushes, and better still do a little digging about Combinatory Logic in general. It's a rich, fascinating field of study that is so simple it's incredibly easy to pick up, and it leads naturally into functional and [concatenative][joy] languages.
   
-## Is it any good?
+## Is Katy any good?
 
-[Yes][y]. And by the way if you like Katy, you'll love [jQuery Combinators][jc].
+[Yes][y]. And if you like Katy, you'll love [jQuery Combinators][jc].
 
 License
 ---
