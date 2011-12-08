@@ -237,6 +237,11 @@ For example, `T` reverses the order of two things. Think about it: Instead of wr
 
 Many other combinators exist, and they are all interesting with applications for functional and OO programmers. With combinators you can even get rid of parentheses in a programming language! If you aren't familiar with Combinatory Logic, I encourage you to follow the links to my posts about Kestrels and Thrushes, and better still do a little digging about Combinatory Logic in general. It's a rich, fascinating field of study that is so simple it's incredibly easy to pick up, and it leads naturally into functional and [concatenative][joy] languages.
 
+## I also use Ruby. Where can I read more about combinators in Ruby?
+
+1. My blog posts about combinators, starting with the [Kestrel][k] and [Thrush][t].
+2. [Kestrels, Quirky Birds, and Hopeless Egocentricity](http://leanpub.com/combinators), all of my writing about Ruby combinators, collected into one convenient and inexpensive e-book.
+
 ## Katy is the wrong approach, method chaining and cascading is a syntax issue, not a functional issue
 
 [I agree][sans-titre], but that being said:
