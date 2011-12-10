@@ -53,7 +53,7 @@ fluentCar = Car()
 
 Fluent interfaces rely on the author of the API making sure that each method returns its receiver so that you can chain the next method to it. jQuery does this effectively, and libraries like [Underscore][u] provide some special support for chaining its methods as well. But what if you have some objects that weren't written with chaining in mind?
 
-Katy's `.K` allows you to make any function or method "fluent" even if the original author has other ideas. It's very similar to Underscore's `_.tap` (although it has some extra tricks up its sleeve, as you'll see below). We'll use a ridiculously simple example to demonstrate: The `.pop()` method of `Array` returns what it pops, not the array. So if you want to pop a few things off an array and then do something with what's left, you can mix Katy into `Array` and use `.K` to call `.pop` by name:
+Katy's `.K` allows you to make any function or method "fluent" even if the original author has other ideas. It's very similar to Underscore's `_.tap` (although it has some extra tricks up its sleeve, such as calling a method by name). We'll use a ridiculously simple example to demonstrate: The `.pop()` method of `Array` returns what it pops, not the array. So if you want to pop a few things off an array and then do something with what's left, you can mix Katy into `Array` and use `.K` to call `.pop` by name:
 
 ```CoffeeScript
 # Example turning .pop() into a fluent method
@@ -114,7 +114,7 @@ Passing functions to `.K` provides two wins: It makes the functions "fluent," an
 
 To recap, when you use `.K`:
 
-1. You can give any built-in method either "fluent" (return the receiver) semantics, and;
+1. You can give any built-in method "fluent" (return the receiver) semantics, and;
 2. You can make any function into something that can be called like a method, making your code read more naturally and allowing you to extend classes without opening up their prototypes.
 
 ## .T
