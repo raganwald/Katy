@@ -110,6 +110,8 @@ numsort = (arr) ->
   # => returns [4, 5, 6, 7, 8, 9, 10]
 ```
 
+(As you may have noticed, you can also pass additional parameters to your functions or named methods. In the code above, `pop_n` is called with a first parameter of the receiver and a second parameter of `3`.)
+
 Passing functions to `.K` provides two wins: It makes the functions "fluent," and you also get something a little like a C# extension methods: You get to write your own methods like `pop_n` and `numsort` for classes without opening them up and monkey-patching them.
 
 To recap, when you use `.K`:
@@ -147,61 +149,21 @@ sortedcopy = (arr) ->
   # => returns [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] WIN!
 ```
 
-Here's another example, a custom array filter based on Underscore's `.select`
+Here's another example, a custom array filter:
 
 ```CoffeeScript
-require 'underscore'
 
 identifiers = (arrOfSymbols) ->
-  _.select arrOfSymbols, (str) ->
-    /^[_a-zA-Z]\w*$/.test(str)
-  
-idents = someArray.T(identifiers)
-```
-
-`.T` lets you use `identifiers` as if it were a method baked into `Array`. You could write `identifiers(someArray)`, but as we saw above, when you are chaining together multiple calls, you want your expression to read very naturally from left to right on one line or from top to bottom on one line.
-
-```CoffeeScript
-require 'underscore'
-
-identifiers = (arrOfSymbols) ->
-  _.select arrOfSymbols, (str) ->
+  arrOfSymbols.filter (str) ->
     /^[_a-zA-Z]\w*$/.test(str)
   
 sorted_list_of_identifier_lengths = someArray
-  .T(identifiers)
-  .T(_.map, (i) -> i.length) # yes, you can pass extra parameters when you call .T
   .sort()
+  .T( identifiers )
+  .map( (i) -> i.length )
 ```
 
-This gets rid of nesting calls to `identifier` and `_.map`, so the data "flows" from top to bottom. Speaking of `_.map`, we can use `expr.T(_)` wherever we would ordinarily use `_(expr)`:
-
-```CoffeeScript
-require 'underscore'
-
-identifiers = (arrOfSymbols) ->
-  _.select arrOfSymbols, (str) ->
-    /^[_a-zA-Z]\w*$/.test(str)
-  
-sorted_list_of_identifier_lengths = someArray
-  .T(identifiers)
-  .T(_).map( (i) -> i.length )
-  .sort()
-```
-
-Like we saw with `.K`, you can also pass additional parameters to your functions. The function is called with its first parameter being the receiver and subsequent parameters being anything you pass in:
-
-```CoffeeScript
-KT.mixInto(Array)
-
-pop_n = (arr, n) -> 
-  for x in [1..n]
-    arr.pop()
-
-[1..10]
-  .T( pop_n, 3 )
-  # => returns [10..8], an array of the values popped
-```
+`.T` lets you use `identifiers` as if it were a method baked into `Array`. You could write `identifiers(someArray.sort())`, but as we saw above, when you are chaining together multiple calls, you want your expression to read very naturally from left to right on one line or from top to bottom on one line.
 
 In summary, `.T` is very much like having C#'s extension methods in your CoffeeScript and JavaScript projects, without returning the receiver.
 
