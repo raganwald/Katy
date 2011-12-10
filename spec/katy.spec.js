@@ -136,7 +136,10 @@
   });
 
   describe('miscellaneous', function() {
-    return it('should work like this', function() {
+    beforeEach(function() {
+      return KT.mixInto(Array);
+    });
+    it('should work like this', function() {
       var pop_n;
       pop_n = function(arr, n) {
         var x, _results;
@@ -146,8 +149,20 @@
         }
         return _results;
       };
-      expect(KT([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]).T(pop_n, 3)).toEqual([10, 9, 8]);
-      return expect(KT([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]).K(pop_n, 3)).toEqual([1, 2, 3, 4, 5, 6, 7]);
+      expect([1, 2, 3, 4, 5, 6, 7, 8, 9, 10].T(pop_n, 3)).toEqual([10, 9, 8]);
+      return expect([1, 2, 3, 4, 5, 6, 7, 8, 9, 10].K(pop_n, 3)).toEqual([1, 2, 3, 4, 5, 6, 7]);
+    });
+    return it('should have docs that use built-in methods', function() {
+      var identifiers, result;
+      identifiers = function(arrOfSymbols) {
+        return arrOfSymbols.filter(function(str) {
+          return /^[_a-zA-Z]\w*$/.test(str);
+        });
+      };
+      result = ['sna', 10, 'fu', 'bar', '1wayticket'].sort().T(identifiers).map(function(i) {
+        return i.length;
+      });
+      return expect(result).toEqual([3, 2, 3]);
     });
   });
 

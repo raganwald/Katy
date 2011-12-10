@@ -159,12 +159,28 @@ describe 'chaining', ->
 
 describe 'miscellaneous', ->
 
+  beforeEach ->
+    KT.mixInto(Array)
+
   it 'should work like this', ->
 
     pop_n = (arr, n) ->
       for x in [1..n]
         arr.pop()
 
-    expect( KT([1..10]).T( pop_n, 3 ) ).toEqual([10..8])
+    expect( [1..10].T( pop_n, 3 ) ).toEqual([10..8])
 
-    expect( KT([1..10]).K( pop_n, 3 ) ).toEqual([1..7])
+    expect( [1..10].K( pop_n, 3 ) ).toEqual([1..7])
+
+  it 'should have docs that use built-in methods', ->
+
+    identifiers = (arrOfSymbols) ->
+      arrOfSymbols.filter (str) ->
+        /^[_a-zA-Z]\w*$/.test(str)
+
+    result = ['sna', 10, 'fu', 'bar', '1wayticket']
+      .sort()
+      .T( identifiers )
+      .map( (i) -> i.length )
+
+    expect( result ).toEqual([3, 2, 3])

@@ -157,10 +157,11 @@ identifiers = (arrOfSymbols) ->
   arrOfSymbols.filter (str) ->
     /^[_a-zA-Z]\w*$/.test(str)
   
-sorted_list_of_identifier_lengths = someArray
+['sna', 10, 'fu', 'bar', '1wayticket']
   .sort()
   .T( identifiers )
   .map( (i) -> i.length )
+  # => returns [3, 2, 3]
 ```
 
 `.T` lets you use `identifiers` as if it were a method baked into `Array`. You could write `identifiers(someArray.sort())`, but as we saw above, when you are chaining together multiple calls, you want your expression to read very naturally from left to right on one line or from top to bottom on one line.
