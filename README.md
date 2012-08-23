@@ -1,3 +1,4 @@
+[![build status](https://secure.travis-ci.org/raganwald/Katy.png)](http://travis-ci.org/raganwald/Katy)
 Katy: CoffeeScript and JavaScript Combinators
 ===
 
