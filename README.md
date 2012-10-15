@@ -304,6 +304,11 @@ Many other combinators exist, and they are all interesting with applications for
 
 [Yes][y]. And if you like Katy, you'll love [jQuery Combinators][jc].
 
+post scriptum
+-------------
+
+I'm writing a book called [CoffeeScript Ristretto](http://leanpub.com/coffeescript-ristretto). Check it out!
+
 License
 ---
 
