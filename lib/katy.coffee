@@ -57,20 +57,20 @@ functionalize = (fn) ->
 class OneTimeWrapper
   constructor: (@what) ->
   K: (fn, args...) ->
-    functionalize(fn)(@what, args...)
+    functionalize(fn).apply(@what, @what, args)
     @what
   T: (fn, args...) ->
-    functionalize(fn)(@what, args...)
+    functionalize(fn).apply(@what, @what, args)
   chain: -> new MonadicWrapper(@what)
   value: -> @what
 
 class MonadicWrapper
   constructor: (@what) ->
   K: (fn, args...) ->
-    functionalize(fn)(@what, args...)
+    functionalize(fn).apply(@what, @what, args)
     this
   T: (fn, args...) ->
-    new MonadicWrapper(functionalize(fn)(@what, args...))
+    new MonadicWrapper(functionalize(fn).apply(@what, @what, args))
   chain: -> this
   value: -> @what
 
@@ -80,7 +80,7 @@ root.KT.mixInto = (clazzes...) ->
   for clazz in clazzes
     do (clazz) ->
       clazz.prototype.K = (fn, args...) ->
-        functionalize(fn)(this, args...)
+        functionalize(fn).apply(this, this, args)
         this
       clazz.prototype.T = (fn, args...) ->
-        functionalize(fn)(this, args...)
+        functionalize(fn).apply(this, this, args)
